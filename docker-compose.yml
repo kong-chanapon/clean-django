@@ -13,6 +13,11 @@ services:
         - ./docker-volumes/pgdb:/var/lib/postgresql/data
       networks:
         - mynetwork
+      healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U admin"]
+        interval: 10s
+        timeout: 5s
+        retries: 5
 
     pgadmin:
       image: dpage/pgadmin4
@@ -27,27 +32,28 @@ services:
       networks:
         - mynetwork
   
-    # app:
-    #   image: djago-clean
-    #   container_name: djago-clean
-    #   build: .
-    #   working_dir: /app
-    #   ports:
-    #     - "8000:8000"
-    #   volumes:
-    #     - ./app:/app/app
-    #     - ./assets:/app/assets
-    #   depends_on:
-    #     - pgdb
-    #   environment:
-    #     - DB_HOST=pgdb
-    #     - DB_PORT=5432
-    #     - DB_NAME=postgres
-    #     - DB_USER=admin
-    #     - DB_PASS=1234
-    #     - DEBUG=True
-    #   networks:
-    #   - mynetwork
+    app:
+      image: djago-clean
+      container_name: djago-clean
+      build: .
+      working_dir: /app
+      ports:
+        - "8000:8000"
+      volumes:
+        - ./app:/app/app
+        - ./assets:/app/assets
+      depends_on:
+        pgdb:
+          condition: service_healthy
+      environment:
+        - DB_HOST=pgdb
+        - DB_PORT=5432
+        - DB_NAME=postgres
+        - DB_USER=admin
+        - DB_PASS=1234
+        - DEBUG=True
+      networks:
+      - mynetwork
 
     # sonarqube:
     #   image: sonarqube:community

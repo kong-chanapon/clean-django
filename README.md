@@ -1,37 +1,15 @@
 # Project นี้จัดทำขึ้นมาเพื่อนำความรู้เรื่อง Clean Architecture ที่ได้จาก Gofive Bootcamp มาประยุกต์ใช้งาน
 
-## Run
-
+## Run Docker Compose
 Navigate to the Project Directory
 
 ```bash
   cd clean-django
 ```
 
-Set Up Virtual Environment
-
+Start the Application
 ```bash
-  python3 -m venv venv
-  Window -> venv\Scripts\activate
-  macOS -> source venv/bin/activate
-```
-
-Build and Start the Database with Docker
-
-```bash
-  docker-compose up --build -d
-```
-
-Running the Application
-
-```bash
-  pip install -r requirements.txt
-```
-
-Apply Migrations
-
-```bash
-  python3 manage.py migrate
+  docker compose up -d
 ```
 
 Create a Superuser
@@ -40,22 +18,17 @@ Create a Superuser
   python3 manage.py createsuperuser
 ```
 
-Start the Django Development Server
-```bash
-  python3 manage.py runserver
-```
-
 Stopping the Application
 ```bash
   docker-compose down
 ```
 
-## Admin Dashboard
+## API
+
+Admin Dashboard (Multi-Page Application)
 ```bash
   http://localhost:8000/admin/
 ```
-
-## API
 
 Swagger
 ```bash
