@@ -26,9 +26,7 @@ schema_view = get_schema_view(
    openapi.Info(
       title="BlogPosts API",
       default_version='v1',
-      terms_of_service="https://www.google.com/policies/terms/",
-      contact=openapi.Contact(email="contact@snippets.local"),
-      license=openapi.License(name="BSD License"),
+      contact=openapi.Contact(email="chanapon.1312@gmail.com"),
    ),
    public=True,
    permission_classes=[permissions.AllowAny],
