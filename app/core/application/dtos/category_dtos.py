@@ -9,7 +9,7 @@ class BaseCategoryRequestDto(serializers.Serializer):
     name = serializers.CharField(max_length=255)
     url_handle = serializers.CharField(max_length=255)
 
-class AddCategoryRequestDto(BaseCategoryRequestDto):
+class CreateCategoryRequestDto(BaseCategoryRequestDto):
     pass
 
 class UpdateCategoryRequestDto(BaseCategoryRequestDto):

@@ -15,7 +15,7 @@ class BlogPostRepository:
 
     @classmethod
     def get_by_url_handle(cls, url_handle: str) -> BlogPost:
-        return cls.__blog_post_manager.filter(url_handle=url_handle)
+        return cls.__blog_post_manager.filter(url_handle=url_handle).first()
 
     @classmethod
     def create(cls, data: BlogPost) -> BlogPost:

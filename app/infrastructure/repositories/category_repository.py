@@ -15,7 +15,7 @@ class CategoryRepository:
 
     @classmethod
     def get_by_url_handle(cls, url_handle: str) -> Category:
-        return cls.__category_manager.filter(url_handle=url_handle)
+        return cls.__category_manager.filter(url_handle=url_handle).first()
 
     @classmethod
     def create(cls, data: Category) -> Category:

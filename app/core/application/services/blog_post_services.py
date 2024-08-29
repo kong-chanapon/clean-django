@@ -21,7 +21,7 @@ class BlogPostService:
     def get_by_url_handle(cls, url_handle: str):
         try:
             result = cls.__repository.get_by_url_handle(url_handle)
-            return BlogPostResponseDto(result, many=True).data
+            return BlogPostResponseDto(result).data
         except BlogPost.DoesNotExist:
             raise NotFound("Blog post not found")
         
@@ -79,8 +79,8 @@ class BlogPostService:
     @classmethod
     def delete(cls, id: UUID):
         try:
-            result = cls.__repository.delete(id)
-            result.id = id
+            result = cls.get_by_id(id)
+            cls.__repository.delete(id)
             return BlogPostResponseDto(result).data
         except BlogPost.DoesNotExist:
             raise NotFound("Blog post not found")

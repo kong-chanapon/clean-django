@@ -57,7 +57,13 @@ Stopping the Application
 
 ## API
 
+Swagger
+```bash
+  http://localhost:8000/swagger/
+```
+
 Postman
 ```bash
   https://www.postman.com/mission-geoscientist-50927451/workspace/chanapon-django-clean/collection/37942682-f150b8f8-c0d6-4f44-9f89-136843b4d1b8?action=share&creator=37942682
 ```
+

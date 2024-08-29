@@ -1,5 +1,5 @@
 from app.infrastructure.repositories.category_repository import CategoryRepository
-from app.core.application.dtos.category_dtos import CategoryResponseDto, AddCategoryRequestDto, UpdateCategoryRequestDto
+from app.core.application.dtos.category_dtos import CategoryResponseDto, CreateCategoryRequestDto, UpdateCategoryRequestDto
 from app.core.domain.entities.category import Category
 from uuid import UUID
 from typing import List
@@ -21,7 +21,7 @@ class CategoryService:
     def get_by_url_handle(cls, url_handle: str):
         try:
             result = cls.__repository.get_by_url_handle(url_handle)
-            return CategoryResponseDto(result, many=True).data
+            return CategoryResponseDto(result).data
         except Category.DoesNotExist:
             raise NotFound("Category not found")
         
@@ -36,7 +36,7 @@ class CategoryService:
 
     @classmethod
     def create(cls, data):
-        serializer = AddCategoryRequestDto(data=data)
+        serializer = CreateCategoryRequestDto(data=data)
         if serializer.is_valid(raise_exception=True):
             category = Category(**serializer.validated_data)
             result = cls.__repository.create(category)
@@ -59,8 +59,8 @@ class CategoryService:
     @classmethod
     def delete(cls, id: UUID):
         try:
-            result = cls.__repository.delete(id)
-            result.id = id
+            result = cls.__repository.get_by_id(id)
+            cls.__repository.delete(id)
             return CategoryResponseDto(result).data
         except Category.DoesNotExist:
             raise NotFound("Category not found")
