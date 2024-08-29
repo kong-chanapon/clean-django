@@ -1,13 +1,11 @@
 __pycache__
 .data
 .venv
-.env
 .gcloud
 .local
 .vscode
 db.sqlite3
 assets/
-env/
 package-lock.json
 staticfiles/
 docker-volumes/

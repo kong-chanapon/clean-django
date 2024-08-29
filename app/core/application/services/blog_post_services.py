@@ -81,6 +81,6 @@ class BlogPostService:
         try:
             result = cls.__repository.delete(id)
             result.id = id
-            return BlogPostResponseDto(result)
+            return BlogPostResponseDto(result).data
         except BlogPost.DoesNotExist:
             raise NotFound("Blog post not found")
