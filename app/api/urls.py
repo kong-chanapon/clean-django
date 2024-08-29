@@ -40,7 +40,7 @@ urlpatterns = [
     path('blogposts/urlhandle/<str:url_handle>/', BlogPostUrlHandleView.as_view(), name='blog-post-by-url'),
 
     path('images/', BlogImageListView.as_view(), name='blog-image-list'),
-    path('images/upload', UploadBlogImageView.as_view(), name='upload-blog-image'),
+    path('images/upload/', UploadBlogImageView.as_view(), name='upload-blog-image'),
 
     path('auth/register/', RegisterUserView.as_view(), name='register'),
     path('auth/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
