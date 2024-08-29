@@ -1,0 +1,72 @@
+version: "3"
+
+services:
+    pgdb:
+      image: postgres
+      container_name: postgres
+      ports:
+        - "5432:5432"
+      environment:
+        POSTGRES_USER: admin
+        POSTGRES_PASSWORD: 1234
+      volumes:
+        - ./docker-volumes/pgdb:/var/lib/postgresql/data
+      networks:
+        - mynetwork
+
+    pgadmin:
+      image: dpage/pgadmin4
+      container_name: pgadmin4
+      ports:
+        - "8888:80"
+      environment:
+        PGADMIN_DEFAULT_EMAIL: admin@gmail.com
+        PGADMIN_DEFAULT_PASSWORD: 1234
+      volumes:
+        - ./docker-volumes/pgadmin:/var/lib/pgadmin
+      networks:
+        - mynetwork
+  
+    app:
+      image: djago-clean
+      container_name: djago-clean
+      build: .
+      working_dir: /app
+      ports:
+        - "8000:8000"
+      volumes:
+        - ./app:/app/app
+        - ./assets:/app/assets
+      depends_on:
+        - pgdb
+      environment:
+        - DB_HOST=pgdb
+        - DB_PORT=5432
+        - DB_NAME=postgres
+        - DB_USER=admin
+        - DB_PASS=1234
+        - DEBUG=True
+      networks:
+      - mynetwork
+
+    # sonarqube:
+    #   image: sonarqube:community
+    #   container_name: sonarqube
+    #   depends_on:
+    #     - pgdb
+    #   environment:
+    #     SONAR_JDBC_URL: jdbc:postgresql://pgdb:5432/admin
+    #     SONAR_JDBC_USERNAME: admin
+    #     SONAR_JDBC_PASSWORD: 1234
+    #   volumes:
+    #     - ./sonarqube/data:/opt/sonarqube/data
+    #     - ./sonarqube/extensions:/opt/sonarqube/extensions
+    #     - ./sonarqube/logs:/opt/sonarqube/logs
+    #   ports:
+    #     - "9000:9000"
+    #   networks:
+    #     - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
